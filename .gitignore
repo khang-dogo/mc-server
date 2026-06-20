@@ -1,0 +1,8 @@
+# Minecraft server runtime data
+data/
+mods/*.jar
+config/*
+
+# OS
+.DS_Store
+Thumbs.db

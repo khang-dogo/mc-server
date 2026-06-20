@@ -1,0 +1,52 @@
+services:
+  mc:
+    image: itzg/minecraft-server:latest
+    container_name: minipc-mc
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      VERSION: "${VERSION:-1.21.1}"
+      TYPE: "${TYPE:-FORGE}"
+      # Memory
+      INIT_MEMORY: "1G"
+      MAX_MEMORY: "${MAX_MEMORY:-5G}"
+      # Server properties (env style - auto maps to server.properties)
+      MOTD: "${MOTD:-§6§lMine§e§lCraft §r§71.21.1 §8| §aMini PC Server}"
+      DIFFICULTY: "normal"
+      GAMEMODE: "survival"
+      MAX_PLAYERS: 10
+      PVP: "true"
+      ONLINE_MODE: "true"
+      VIEW_DISTANCE: 10
+      SIMULATION_DISTANCE: 8
+      SPAWN_PROTECTION: 0
+      ALLOW_FLIGHT: "true"
+      ENABLE_COMMAND_BLOCK: "true"
+      MAX_TICK_TIME: 60000
+      LEVEL_TYPE: "default"
+      # Allow manual editing of server.properties
+      OVERRIDE_SERVER_PROPERTIES: "false"
+      # RCON for remote admin
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "minecraft"
+      RCON_PORT: 25575
+      # Performance
+      USE_AIKAR_FLAGS: "true"
+      # Timezone
+      TZ: "${TZ:-Asia/Ho_Chi_Minh}"
+    volumes:
+      # Persist world data, configs, logs (server.properties lives here)
+      - ./data:/data
+      # Mods: drop .jar files here, auto-copied to /data/mods at startup
+      - ./mods:/mods:ro
+      # Extra config files (optional)
+      - ./config:/config:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
