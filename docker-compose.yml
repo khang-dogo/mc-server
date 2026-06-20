@@ -20,7 +20,8 @@ services:
       GAMEMODE: "survival"
       MAX_PLAYERS: 10
       PVP: "true"
-      ONLINE_MODE: "true"
+      ONLINE_MODE: "${ONLINE_MODE:-true}"
+      ENFORCE_SECURE_PROFILE: "false"
       VIEW_DISTANCE: 10
       SIMULATION_DISTANCE: 8
       SPAWN_PROTECTION: 0
